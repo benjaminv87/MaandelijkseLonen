@@ -9,7 +9,7 @@ namespace MaandelijkseLonen
     public class Programmeur:Werknemer
     {
         public bool BedrijfWagen;
-        public Programmeur(string naam, Geslachten geslacht, DateTime geboorteDatum, int rijksRegisterNummer, DateTime datumInDienstTreding, bool bedrijfsWagen, double brutoLoon = 2200, ContractTypes typeContract = ContractTypes.Voltijds) : base(naam, geslacht, geboorteDatum, rijksRegisterNummer, datumInDienstTreding,brutoLoon, typeContract)
+        public Programmeur(string naam, Geslachten geslacht, DateTime geboorteDatum, string rijksRegisterNummer, DateTime datumInDienstTreding, bool bedrijfsWagen, double brutoLoon = 2200, ContractTypes typeContract = ContractTypes.Voltijds) : base(naam, geslacht, geboorteDatum, rijksRegisterNummer, datumInDienstTreding,brutoLoon, typeContract)
         {
             BedrijfWagen = bedrijfsWagen;
             BedrijfsVoorheffing = (bedrijfsWagen == true ? 17.30 : 13.68);
