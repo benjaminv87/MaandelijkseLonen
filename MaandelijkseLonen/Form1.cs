@@ -22,7 +22,8 @@ namespace MaandelijkseLonen
         {
             new Programmeur("Bart Billiet",Werknemer.Geslachten.Man,new DateTime(1981,02,12),"12028166652",new DateTime(2000,01,01),true,1900),
             new Werknemer("Benjamin Vandevelde", Werknemer.Geslachten.Man, new DateTime(1987,11,27),"333333333",new DateTime(2018,08,31)),
-            new ItSupport("Bert Hoorne", Werknemer.Geslachten.Man,new DateTime(1981,02,12),"81021",new DateTime(2011,01,01))
+            new ItSupport("Bert Hoorne", Werknemer.Geslachten.Man,new DateTime(1981,02,12),"81021",new DateTime(2011,01,01)),
+            new CustomerSupport("Ruben De Groote", Werknemer.Geslachten.Man,new DateTime(1981,02,12),"81021",new DateTime(2011,01,01))
         };
 
         public List<string> Maanden = new List<string>()
@@ -51,7 +52,7 @@ namespace MaandelijkseLonen
             if (lbMijnWerknemers.SelectedIndex > -1)
             {
                 Werknemer geselecteerdeWerknemer = (Werknemer)lbMijnWerknemers.SelectedItem;
-                lblMijnWerknemer.Text =Convert.ToString(geselecteerdeWerknemer.BerekenAncieniteit()+geselecteerdeWerknemer.StartLoon());
+                lblMijnWerknemer.Text = geselecteerdeWerknemer.ExtraLegaleVoordelen.ToString();
             }
         }
 

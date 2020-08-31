@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -64,7 +65,7 @@ namespace MaandelijkseLonen
         {
             double startLoon = 0;
             startLoon = BrutoLoon / 38 * Uren[TypeContract.ToString()];
-            return startLoon;
+            return Math.Round(startLoon,2);
         }
         public int AantalJarenInDienst()
         {
@@ -91,12 +92,16 @@ namespace MaandelijkseLonen
 
         public void MaakLoonBrief(string bestandsLocatie)
         {
+            double socialeZekerheid = 200.00;
+            double brutoLoon = StartLoon() + BerekenAncieniteit();
+            double bedragBedrijfsvoorheffing = Math.Round(brutoLoon / 100 * BedrijfsVoorheffing,2);
+            double nettoLoon = Math.Round(brutoLoon - (bedragBedrijfsvoorheffing) + ExtraLegaleVoordelen,2);
             string bestandsNaam = bestandsLocatie+$"LOONBRIEF  {Naam} {RijksRegisterNummer} {DateTime.Now.ToString("MM yyyy")}.txt";
             using (StreamWriter writer = new StreamWriter(bestandsNaam))
             {
-                writer.WriteLine("-----------------------------------------------------------");
+                writer.WriteLine("----------------------------------------------");
                 writer.WriteLine($"LOONBRIEF {Maanden[DateTime.Now.Month+1].ToUpper()} {DateTime.Now.Year} ");
-                writer.WriteLine("-----------------------------------------------------------");
+                writer.WriteLine("----------------------------------------------");
                 writer.WriteLine($"NAAM                     :{Naam}");
                 writer.WriteLine($"RIJKSREGISTERNUMMER      :{RijksRegisterNummer}");
                 writer.WriteLine($"GESLACHT                 :{Geslacht}");
@@ -105,18 +110,29 @@ namespace MaandelijkseLonen
                 writer.WriteLine($"FUNCTIE                  :{FunctieTitel}");
                 writer.WriteLine($"AANTAL GEPRESTEERDE UREN :{Uren[TypeContract.ToString()]}/38");
                 writer.WriteLine($"BEDRIJFSWAGEN            :{(BedrijfsWagen?"Ja":"Nee")}");
-                writer.WriteLine("-----------------------------------------------------------");
-                writer.WriteLine($"STARTLOON                :   € {StartLoon()}");
-                writer.WriteLine($"ANCIËNNITEIT             : + € {BerekenAncieniteit()}");
-                writer.WriteLine($"                             €");
-                writer.WriteLine($"SOCIALE ZEKERHEID        : - €");
-                writer.WriteLine($"                             €");
-                writer.WriteLine($"BEDRIJFSVOORHEFFING      : - €");
-                writer.WriteLine($"                             €");
-                writer.WriteLine($"NETTOLOON                :   €");
-
-                writer.WriteLine("-----------------------------------------------------------");
+                writer.WriteLine("----------------------------------------------");
+                writer.WriteLine($"STARTLOON                :   €{PrintValue(StartLoon())}");
+                writer.WriteLine($"ANCIËNNITEIT             : + €{PrintValue(BerekenAncieniteit())}");
+                writer.WriteLine($"                             €{PrintValue(brutoLoon)}");
+                writer.WriteLine($"SOCIALE ZEKERHEID        : - €{PrintValue(socialeZekerheid)}");
+                writer.WriteLine($"                             €{PrintValue(brutoLoon -socialeZekerheid)}");
+                writer.WriteLine($"BEDRIJFSVOORHEFFING      : - €{PrintValue(bedragBedrijfsvoorheffing)}");
+                writer.WriteLine($"                             €{PrintValue(brutoLoon -(bedragBedrijfsvoorheffing))}");
+                if (ExtraLegaleVoordelen > 0)
+                {
+                writer.WriteLine($"EXTRALEGALE VOORDELEN    : + €{PrintValue(ExtraLegaleVoordelen)}");
+                }
+                writer.WriteLine($"NETTOLOON                :   €{PrintValue(nettoLoon)}");
+                writer.WriteLine("----------------------------------------------");
             }
+            
+        }
+        public string PrintValue(double getal)
+        {
+            string tePrinten = getal.ToString("0.00");
+            tePrinten = string.Format("{0,8}", tePrinten);
+            
+            return tePrinten;
         }
     }
 }
