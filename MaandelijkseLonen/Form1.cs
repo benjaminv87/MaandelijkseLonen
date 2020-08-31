@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Security.Cryptography.X509Certificates;
 using System.Text;
@@ -24,6 +25,21 @@ namespace MaandelijkseLonen
             new ItSupport("Bert Hoorne", Werknemer.Geslachten.Man,new DateTime(1981,02,12),"81021",new DateTime(2011,01,01))
         };
 
+        public List<string> Maanden = new List<string>()
+        {
+            "Januari",
+            "Februari",
+            "Maart",
+            "April",
+            "Mei",
+            "Juni",
+            "Juli",
+            "Augustus",
+            "September",
+            "Oktober",
+            "November",
+            "December"
+        };
         private void Form1_Load(object sender, EventArgs e)
         {
 
@@ -41,9 +57,19 @@ namespace MaandelijkseLonen
 
         private void btnMaakLoonBrieven_Click(object sender, EventArgs e)
         {
+            MaakLoonBrieven();
+        }
+        private void MaakLoonBrieven()
+        {
+            string BestandsLocatie = Environment.CurrentDirectory + $"\\LOONBRIEVEN {Maanden[DateTime.Now.Month]} {DateTime.Now.Year}\\";
+            if (!Directory.Exists(BestandsLocatie))
+            {
+                Directory.CreateDirectory(BestandsLocatie);
+            }
+
             foreach (Werknemer werknemer in mijnWerknemers)
             {
-                werknemer.MaakLoonBrief();
+                werknemer.MaakLoonBrief(BestandsLocatie);
             }
         }
     }

@@ -89,9 +89,9 @@ namespace MaandelijkseLonen
             return Naam;
         }
 
-        public void MaakLoonBrief()
+        public void MaakLoonBrief(string bestandsLocatie)
         {
-            string bestandsNaam = $"LOONBRIEF  {Naam} {RijksRegisterNummer} {DateTime.Now.ToString("MM yyyy")}.txt";
+            string bestandsNaam = bestandsLocatie+$"LOONBRIEF  {Naam} {RijksRegisterNummer} {DateTime.Now.ToString("MM yyyy")}.txt";
             using (StreamWriter writer = new StreamWriter(bestandsNaam))
             {
                 writer.WriteLine("-----------------------------------------------------------");
