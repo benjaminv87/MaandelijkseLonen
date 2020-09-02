@@ -25,22 +25,6 @@ namespace MaandelijkseLonen
             new ItSupport("Bert Hoorne", Werknemer.Geslachten.Man,new DateTime(1981,02,12),"81021",new DateTime(2011,01,01)),
             new CustomerSupport("Ruben De Groote", Werknemer.Geslachten.Man,new DateTime(1981,02,12),"81021",new DateTime(2011,01,01))
         };
-
-        public List<string> Maanden = new List<string>()
-        {
-            "Januari",
-            "Februari",
-            "Maart",
-            "April",
-            "Mei",
-            "Juni",
-            "Juli",
-            "Augustus",
-            "September",
-            "Oktober",
-            "November",
-            "December"
-        };
         private void Form1_Load(object sender, EventArgs e)
         {
 
@@ -52,7 +36,6 @@ namespace MaandelijkseLonen
             if (lbMijnWerknemers.SelectedIndex > -1)
             {
                 Werknemer geselecteerdeWerknemer = (Werknemer)lbMijnWerknemers.SelectedItem;
-                lblMijnWerknemer.Text = geselecteerdeWerknemer.ExtraLegaleVoordelen.ToString();
             }
         }
 
@@ -62,7 +45,8 @@ namespace MaandelijkseLonen
         }
         private void MaakLoonBrieven()
         {
-            string BestandsLocatie = Environment.CurrentDirectory + $"\\LOONBRIEVEN {Maanden[DateTime.Now.Month]} {DateTime.Now.Year}\\";
+            double totaleLoonkost = 0;
+            string BestandsLocatie = Environment.CurrentDirectory + $"\\LOONBRIEVEN {DateTime.Now.ToString("MMMM")} {DateTime.Now.Year}\\";
             if (!Directory.Exists(BestandsLocatie))
             {
                 Directory.CreateDirectory(BestandsLocatie);
@@ -70,7 +54,36 @@ namespace MaandelijkseLonen
 
             foreach (Werknemer werknemer in mijnWerknemers)
             {
-                werknemer.MaakLoonBrief(BestandsLocatie);
+                
+                totaleLoonkost+= werknemer.MaakLoonBrief(BestandsLocatie);
+            }
+            MessageBox.Show(totaleLoonkost.ToString());
+        }
+
+        private void btnGebruikerWijzigen_Click(object sender, EventArgs e)
+        {
+            Werknemer actieveWerknemer = (Werknemer)lbMijnWerknemers.SelectedItem;
+            using(FormGebruikerGegevens newForm = new FormGebruikerGegevens(actieveWerknemer))
+            {
+                if (newForm.ShowDialog() == DialogResult.OK)
+                {
+                    actieveWerknemer = newForm.actieveWerknemer;
+                }
+            }
+        }
+
+        private void btnNieuweWerknemer_Click(object sender, EventArgs e)
+        {
+            Werknemer nieuweWerknemer;
+            using (FormGebruikerGegevens newForm = new FormGebruikerGegevens())
+            {
+                if (newForm.ShowDialog() == DialogResult.OK)
+                {
+                    nieuweWerknemer = newForm.actieveWerknemer;
+                    mijnWerknemers.Add(nieuweWerknemer);
+                    lbMijnWerknemers.DataSource = null;
+                    lbMijnWerknemers.DataSource = mijnWerknemers;
+                }
             }
         }
     }

@@ -8,6 +8,8 @@ namespace MaandelijkseLonen
 {
     public class ItSupport:Support
     {
+
+        public ItSupport() { }
         public ItSupport(string naam, Geslachten geslacht, DateTime geboorteDatum, string rijksRegisterNummer, DateTime datumInDienstTreding, double brutoLoon = 2050) : base(naam, geslacht, geboorteDatum, rijksRegisterNummer, datumInDienstTreding, brutoLoon)
         {
             TypeContract = ContractTypes.Voltijds;

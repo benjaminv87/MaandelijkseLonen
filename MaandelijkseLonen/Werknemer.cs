@@ -15,22 +15,6 @@ namespace MaandelijkseLonen
             {"Voltijds",38 },
             {"Deeltijds",25},
         };
-        public List<string> Maanden = new List<string>()
-        {
-            "Januari",
-            "Februari",
-            "Maart",
-            "April",
-            "Mei",
-            "Juni",
-            "Juli",
-            "Augustus",
-            "September",
-            "Oktober",
-            "November",
-            "December"
-        };
-
 
         public string Naam;
         public Geslachten Geslacht;
@@ -44,7 +28,8 @@ namespace MaandelijkseLonen
         public double ExtraLegaleVoordelen = 0;
         public bool BedrijfsWagen;
         public string FunctieTitel;
-        public Werknemer()
+        public int AantalUren;
+        public Werknemer(double brutoLoon = 1900)
         {
         }
 
@@ -77,7 +62,6 @@ namespace MaandelijkseLonen
             double loon = StartLoon();
             double ancieniteit = loon;
             int jarenInDienst = AantalJarenInDienst();
-            Console.WriteLine(jarenInDienst);
             for (int i = 0; i < jarenInDienst; i++)
             {
                 ancieniteit *=1.01;
@@ -90,9 +74,9 @@ namespace MaandelijkseLonen
             return Naam;
         }
 
-        public void MaakLoonBrief(string bestandsLocatie)
+        public double MaakLoonBrief(string bestandsLocatie)
         {
-            double socialeZekerheid = 200.00;
+            double socialeZekerheid = 200;
             double brutoLoon = StartLoon() + BerekenAncieniteit();
             double bedragBedrijfsvoorheffing = Math.Round(brutoLoon / 100 * BedrijfsVoorheffing,2);
             double nettoLoon = Math.Round(brutoLoon - (bedragBedrijfsvoorheffing) + ExtraLegaleVoordelen,2);
@@ -100,7 +84,7 @@ namespace MaandelijkseLonen
             using (StreamWriter writer = new StreamWriter(bestandsNaam))
             {
                 writer.WriteLine("----------------------------------------------");
-                writer.WriteLine($"LOONBRIEF {Maanden[DateTime.Now.Month+1].ToUpper()} {DateTime.Now.Year} ");
+                writer.WriteLine($"LOONBRIEF {DateTime.Now.ToString("MMMM").ToUpper()} {DateTime.Now.Year} ");
                 writer.WriteLine("----------------------------------------------");
                 writer.WriteLine($"NAAM                     :{Naam}");
                 writer.WriteLine($"RIJKSREGISTERNUMMER      :{RijksRegisterNummer}");
@@ -109,7 +93,7 @@ namespace MaandelijkseLonen
                 writer.WriteLine($"DATUM INDIENSTTREDING    :{DatumInDienstTreding.ToShortDateString()}");
                 writer.WriteLine($"FUNCTIE                  :{FunctieTitel}");
                 writer.WriteLine($"AANTAL GEPRESTEERDE UREN :{Uren[TypeContract.ToString()]}/38");
-                writer.WriteLine($"BEDRIJFSWAGEN            :{(BedrijfsWagen?"Ja":"Nee")}");
+                writer.WriteLine($"BEDRIJFSWAGEN            :{(BedrijfsWagen?"JA":"NEE")}");
                 writer.WriteLine("----------------------------------------------");
                 writer.WriteLine($"STARTLOON                :   €{PrintValue(StartLoon())}");
                 writer.WriteLine($"ANCIËNNITEIT             : + €{PrintValue(BerekenAncieniteit())}");
@@ -125,7 +109,8 @@ namespace MaandelijkseLonen
                 writer.WriteLine($"NETTOLOON                :   €{PrintValue(nettoLoon)}");
                 writer.WriteLine("----------------------------------------------");
             }
-            
+            double totaleLoonkost = StartLoon() + BerekenAncieniteit() + ExtraLegaleVoordelen;
+            return totaleLoonkost;
         }
         public string PrintValue(double getal)
         {
