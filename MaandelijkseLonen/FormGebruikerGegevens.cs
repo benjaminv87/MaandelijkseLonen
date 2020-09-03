@@ -18,34 +18,38 @@ namespace MaandelijkseLonen
             InitializeComponent();
             btnBevestigen.Text = "Maak werknemer aan";
         }
-        public Werknemer actieveWerknemer;
+        public Werknemer actieveWerknemer = null;
         public FormGebruikerGegevens(Werknemer werknemer)
         {
             InitializeComponent();
             actieveWerknemer = werknemer;
-            btnBevestigen.Text = "Wijzigingen bevestigen";
-            tbNaam.Text = actieveWerknemer.Naam;
-            dtGeboorteDatum.Value = actieveWerknemer.GeboorteDatum;
-            cbGeslacht.SelectedItem = actieveWerknemer.Geslacht;
-            tbRijksregisterNummer.Text = actieveWerknemer.RijksRegisterNummer;
-            tbRekeningNummer.Text = actieveWerknemer.Iban;
-            cbFunctie.SelectedItem = actieveWerknemer.FunctieTitel;
-            cbTypeContract.SelectedItem = actieveWerknemer.TypeContract;
-            numUren.Value = actieveWerknemer.AantalUren;
-            numBrutoLoon.Value = (Decimal)actieveWerknemer.BrutoLoon;
-            cbBedrijfsWagen.SelectedItem = actieveWerknemer.BedrijfsWagen;
-        }
+         }
 
         private void FormGebruikerGegevens_Load(object sender, EventArgs e)
         {
-            cbBedrijfsWagen.DataSource = new List<bool>() { true, false };
+            cbBedrijfsWagen.DataSource = new List<string>() { "Ja", "Nee" };
             cbFunctie.DataSource = new List<string>() { "Werknemer", "Programmeur", "It Support", "Customer Support" };
             cbGeslacht.DataSource = Enum.GetValues(typeof(Werknemer.Geslachten));
             cbTypeContract.DataSource = Enum.GetValues(typeof(Werknemer.ContractTypes));
-
-
             dtGeboorteDatum.Format = DateTimePickerFormat.Custom;
             dtGeboorteDatum.CustomFormat = "dd MMM yyyy";
+
+            if (actieveWerknemer != null)
+            {
+
+                ActiveForm.Text = "Gegevens wijzigen";
+                btnBevestigen.Text = "Wijzigingen bevestigen";
+                tbNaam.Text = actieveWerknemer.Naam;
+                dtGeboorteDatum.Value = actieveWerknemer.GeboorteDatum;
+                cbGeslacht.SelectedItem = actieveWerknemer.Geslacht;
+                tbRijksregisterNummer.Text = actieveWerknemer.RijksRegisterNummer;
+                tbRekeningNummer.Text = actieveWerknemer.Iban;
+                cbFunctie.SelectedItem = actieveWerknemer.FunctieTitel;
+                cbTypeContract.SelectedItem = actieveWerknemer.TypeContract;
+                numUren.Value = actieveWerknemer.AantalUren;
+                numBrutoLoon.Value = Convert.ToDecimal(actieveWerknemer.BrutoLoon);
+                cbBedrijfsWagen.SelectedItem = actieveWerknemer.BedrijfsWagen ? "Ja" : "Nee";
+            }
         }
 
         private void btnBevestigen_Click(object sender, EventArgs e)
@@ -53,10 +57,26 @@ namespace MaandelijkseLonen
             UpdateWerknemer();
             DialogResult = DialogResult.OK;
         }
- 
+
 
         public void UpdateWerknemer()
         {
+            switch (cbFunctie.SelectedItem)
+            {
+                case "Werknemer":
+                    actieveWerknemer = new Werknemer();
+                    break;
+                case "Programmeur":
+                    actieveWerknemer = new Programmeur();
+                    break;
+                case "It Support":
+                    actieveWerknemer = new ItSupport();
+                    break;
+                case "Customer Support":
+                    actieveWerknemer = new CustomerSupport();
+                    break;
+            }
+
             actieveWerknemer.Naam = tbNaam.Text;
             actieveWerknemer.GeboorteDatum = dtGeboorteDatum.Value;
             actieveWerknemer.Geslacht = (Werknemer.Geslachten)cbGeslacht.SelectedItem;
@@ -65,8 +85,11 @@ namespace MaandelijkseLonen
             actieveWerknemer.FunctieTitel = cbFunctie.SelectedItem.ToString();
             actieveWerknemer.TypeContract = (Werknemer.ContractTypes)cbTypeContract.SelectedItem;
             actieveWerknemer.AantalUren = (int)numUren.Value;
-            actieveWerknemer.BrutoLoon = (double)numBrutoLoon.Value;
-            actieveWerknemer.BedrijfsWagen = (bool)cbBedrijfsWagen.SelectedItem;
+            if (numBrutoLoon.Value != 0)
+            {
+                actieveWerknemer.BrutoLoon = Convert.ToDouble(numBrutoLoon.Value);
+            }
+            actieveWerknemer.BedrijfsWagen = (cbBedrijfsWagen.SelectedItem.ToString() == "Ja" ? true : false);
         }
 
         private void btnCancel_Click(object sender, EventArgs e)
@@ -79,39 +102,34 @@ namespace MaandelijkseLonen
             switch (cbFunctie.SelectedItem)
             {
                 case "Werknemer":
-                    actieveWerknemer = new Werknemer();
                     cbBedrijfsWagen.Enabled = false;
-                    cbBedrijfsWagen.SelectedItem = false;
+                    cbBedrijfsWagen.SelectedItem = "Nee";
                     cbTypeContract.Enabled = true;
-                    numUren.Enabled = true; 
+                    numUren.Enabled = true;
                     break;
                 case "Programmeur":
-                    actieveWerknemer = new Programmeur();
                     cbBedrijfsWagen.Enabled = true;
-                    cbBedrijfsWagen.SelectedItem = false;
+                    cbBedrijfsWagen.SelectedItem = "Nee";
                     cbTypeContract.Enabled = true;
-                    numUren.Enabled = true; 
+                    numUren.Enabled = true;
                     break;
                 case "It Support":
-                    actieveWerknemer = new ItSupport();
                     cbBedrijfsWagen.Enabled = false;
-                    cbBedrijfsWagen.SelectedItem = false;
+                    cbBedrijfsWagen.SelectedItem = "Nee";
                     cbTypeContract.Enabled = false;
                     cbTypeContract.SelectedItem = Werknemer.ContractTypes.Voltijds;
                     numUren.Enabled = false;
                     numUren.Value = 38;
                     break;
                 case "Customer Support":
-                    actieveWerknemer = new CustomerSupport();
                     cbBedrijfsWagen.Enabled = false;
-                    cbBedrijfsWagen.SelectedItem = false;
+                    cbBedrijfsWagen.SelectedItem = "Nee";
                     cbTypeContract.Enabled = false;
                     cbTypeContract.SelectedItem = Werknemer.ContractTypes.Voltijds;
                     numUren.Enabled = false;
                     numUren.Value = 38;
                     break;
             }
-            numBrutoLoon.Value = (decimal)actieveWerknemer.BrutoLoon;
         }
 
         private void cbTypeContract_SelectedIndexChanged(object sender, EventArgs e)
@@ -124,8 +142,17 @@ namespace MaandelijkseLonen
             else
             {
                 numUren.Enabled = true;
-                numUren.Maximum = 38;
+                numUren.Value = 37;
             }
+        }
+
+        private void numUren_ValueChanged(object sender, EventArgs e)
+        {
+            if (numUren.Value == 38)
+            {
+                cbTypeContract.SelectedItem = Werknemer.ContractTypes.Voltijds;
+            }
+
         }
     }
 }

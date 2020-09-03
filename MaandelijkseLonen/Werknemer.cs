@@ -54,7 +54,7 @@ namespace MaandelijkseLonen
         }
         public int AantalJarenInDienst()
         {
-            int jarenInDienst = DateTime.Now.Year - DatumInDienstTreding.Year + ((DateTime.Now.Day < DatumInDienstTreding.Day) ? -1 : 0);
+            int jarenInDienst = DateTime.Now.Year - DatumInDienstTreding.Year + ((DateTime.Now.Month < DatumInDienstTreding.Month) ? -1 : 0);
             return jarenInDienst;
         }
         public virtual double BerekenAncieniteit()

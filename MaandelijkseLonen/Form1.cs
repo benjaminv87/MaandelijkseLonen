@@ -54,10 +54,8 @@ namespace MaandelijkseLonen
 
             foreach (Werknemer werknemer in mijnWerknemers)
             {
-                
                 totaleLoonkost+= werknemer.MaakLoonBrief(BestandsLocatie);
             }
-            MessageBox.Show(totaleLoonkost.ToString());
         }
 
         private void btnGebruikerWijzigen_Click(object sender, EventArgs e)

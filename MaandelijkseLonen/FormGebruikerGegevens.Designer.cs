@@ -123,7 +123,7 @@
             // tbRijksregisterNummer
             // 
             this.tbRijksregisterNummer.Location = new System.Drawing.Point(122, 98);
-            this.tbRijksregisterNummer.Mask = "00 00 00 000 00";
+            this.tbRijksregisterNummer.Mask = "000000-000-00";
             this.tbRijksregisterNummer.Name = "tbRijksregisterNummer";
             this.tbRijksregisterNummer.Size = new System.Drawing.Size(130, 20);
             this.tbRijksregisterNummer.TabIndex = 7;
@@ -226,6 +226,7 @@
             this.numUren.Name = "numUren";
             this.numUren.Size = new System.Drawing.Size(121, 20);
             this.numUren.TabIndex = 5;
+            this.numUren.ValueChanged += new System.EventHandler(this.numUren_ValueChanged);
             // 
             // cbTypeContract
             // 
