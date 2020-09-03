@@ -46,7 +46,7 @@ namespace MaandelijkseLonen
         private void MaakLoonBrieven()
         {
             double totaleLoonkost = 0;
-            string BestandsLocatie = Environment.CurrentDirectory + $"\\LOONBRIEVEN {DateTime.Now.ToString("MMMM")} {DateTime.Now.Year}\\";
+            string BestandsLocatie = Environment.CurrentDirectory + $"\\LOONBRIEVEN {DateTime.Now.ToString("MMMM yyyy").ToUpper()}\\";
             if (!Directory.Exists(BestandsLocatie))
             {
                 Directory.CreateDirectory(BestandsLocatie);
@@ -56,6 +56,15 @@ namespace MaandelijkseLonen
             {
                 totaleLoonkost+= werknemer.MaakLoonBrief(BestandsLocatie);
             }
+            string loonKostCheck = File.ReadAllText("loonkosten.txt");
+            if (!loonKostCheck.Contains(DateTime.Now.ToString("MMMM yyyy").ToUpper()))
+            {
+                using (StreamWriter writer = new StreamWriter("loonkosten.txt", true))
+                {
+                    writer.WriteLine($"Loonkost voor de maand {DateTime.Now.ToString("MMMM yyyy").ToUpper()}: €{totaleLoonkost}");
+                }
+            }
+
         }
 
         private void btnGebruikerWijzigen_Click(object sender, EventArgs e)
@@ -68,6 +77,8 @@ namespace MaandelijkseLonen
                     actieveWerknemer = newForm.actieveWerknemer;
                 }
             }
+            lbMijnWerknemers.DataSource = null;
+            lbMijnWerknemers.DataSource = mijnWerknemers;
         }
 
         private void btnNieuweWerknemer_Click(object sender, EventArgs e)

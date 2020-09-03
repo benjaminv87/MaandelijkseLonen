@@ -20,7 +20,6 @@ namespace MaandelijkseLonen
             double loon = StartLoon()*0.94;
             double ancieniteit = loon;
             int jarenInDienst = AantalJarenInDienst();
-            Console.WriteLine(jarenInDienst);
             for (int i = 0; i < jarenInDienst; i++)
             {
                 ancieniteit *= 1.01;

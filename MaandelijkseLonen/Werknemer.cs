@@ -44,6 +44,7 @@ namespace MaandelijkseLonen
             TypeContract = typeContract;
             DatumInDienstTreding = datumInDienstTreding;
             BedrijfsWagen = false;
+            AantalUren = (typeContract == ContractTypes.Voltijds) ? 38 : AantalUren;
         }
 
         public double StartLoon()
@@ -54,7 +55,7 @@ namespace MaandelijkseLonen
         }
         public int AantalJarenInDienst()
         {
-            int jarenInDienst = DateTime.Now.Year - DatumInDienstTreding.Year + ((DateTime.Now.Month < DatumInDienstTreding.Month) ? -1 : 0);
+            int jarenInDienst = DateTime.Now.Year - DatumInDienstTreding.Year + ((DateTime.Now.Month <= DatumInDienstTreding.Month) ? -1 : 0);
             return jarenInDienst;
         }
         public virtual double BerekenAncieniteit()
@@ -108,6 +109,9 @@ namespace MaandelijkseLonen
                 }
                 writer.WriteLine($"NETTOLOON                :   €{PrintValue(nettoLoon)}");
                 writer.WriteLine("----------------------------------------------");
+                writer.WriteLine("Het wordt uitbetaald op: {0}",Iban);
+                writer.WriteLine("----------------------------------------------");
+
             }
             double totaleLoonkost = StartLoon() + BerekenAncieniteit() + ExtraLegaleVoordelen;
             return totaleLoonkost;
