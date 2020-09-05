@@ -44,7 +44,6 @@
             this.lbMijnWerknemers.Name = "lbMijnWerknemers";
             this.lbMijnWerknemers.Size = new System.Drawing.Size(132, 121);
             this.lbMijnWerknemers.TabIndex = 0;
-            this.lbMijnWerknemers.SelectedIndexChanged += new System.EventHandler(this.lbMijnWerknemers_SelectedIndexChanged);
             // 
             // btnMaakLoonBrieven
             // 
@@ -66,7 +65,7 @@
             this.btnGebruikerWijzigen.Name = "btnGebruikerWijzigen";
             this.btnGebruikerWijzigen.Size = new System.Drawing.Size(130, 23);
             this.btnGebruikerWijzigen.TabIndex = 3;
-            this.btnGebruikerWijzigen.Text = "Wijzig gebruiker";
+            this.btnGebruikerWijzigen.Text = "Wijzig werknemer";
             this.btnGebruikerWijzigen.UseVisualStyleBackColor = true;
             this.btnGebruikerWijzigen.Click += new System.EventHandler(this.btnGebruikerWijzigen_Click);
             // 
@@ -94,7 +93,7 @@
             this.MinimumSize = new System.Drawing.Size(300, 180);
             this.Name = "Form1";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "Form1";
+            this.Text = "Mijn Werknemers";
             this.Load += new System.EventHandler(this.Form1_Load);
             this.ResumeLayout(false);
 

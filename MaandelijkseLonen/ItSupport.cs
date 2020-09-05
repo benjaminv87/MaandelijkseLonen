@@ -8,11 +8,14 @@ namespace MaandelijkseLonen
 {
     public class ItSupport:Support
     {
-
-        public ItSupport() { }
-        public ItSupport(string naam, Geslachten geslacht, DateTime geboorteDatum, string rijksRegisterNummer, DateTime datumInDienstTreding, double brutoLoon = 2050) : base(naam, geslacht, geboorteDatum, rijksRegisterNummer, datumInDienstTreding, brutoLoon)
+        
+        public ItSupport() 
+        {
+        }
+        public ItSupport(string naam, Geslachten geslacht, DateTime geboorteDatum, string rijksRegisterNummer, string iban, DateTime datumInDienstTreding, double brutoLoon = 2050) : base(naam, geslacht, geboorteDatum, rijksRegisterNummer,iban, datumInDienstTreding, brutoLoon)
         {
             TypeContract = ContractTypes.Voltijds;
+            FunctieTitel = "It Support";
         }
 
         public override double BerekenAncieniteit()

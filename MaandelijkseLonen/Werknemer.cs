@@ -10,11 +10,6 @@ namespace MaandelijkseLonen
 {
     public partial class Werknemer
     {
-        public Dictionary<string, int> Uren = new Dictionary<string, int>()
-        {
-            {"Voltijds",38 },
-            {"Deeltijds",25},
-        };
 
         public string Naam;
         public Geslachten Geslacht;
@@ -31,14 +26,16 @@ namespace MaandelijkseLonen
         public int AantalUren;
         public Werknemer(double brutoLoon = 1900)
         {
+            BrutoLoon = brutoLoon;
         }
 
-        public Werknemer(string naam, Geslachten geslacht, DateTime geboorteDatum, string rijksRegisterNummer, DateTime datumInDienstTreding, double brutoLoon = 1900, ContractTypes typeContract= ContractTypes.Voltijds)
+        public Werknemer(string naam, Geslachten geslacht, DateTime geboorteDatum, string rijksRegisterNummer,string iban, DateTime datumInDienstTreding, double brutoLoon = 1900, ContractTypes typeContract= ContractTypes.Voltijds)
         {
             FunctieTitel = "Werknemer";
             Naam = naam;
             Geslacht = geslacht;
             GeboorteDatum = geboorteDatum;
+            Iban = iban;
             RijksRegisterNummer = rijksRegisterNummer;
             BrutoLoon = brutoLoon;
             TypeContract = typeContract;
@@ -50,7 +47,7 @@ namespace MaandelijkseLonen
         public double StartLoon()
         {
             double startLoon = 0;
-            startLoon = BrutoLoon / 38 * Uren[TypeContract.ToString()];
+            startLoon = BrutoLoon / 38 * AantalUren;
             return Math.Round(startLoon,2);
         }
         public int AantalJarenInDienst()
@@ -85,7 +82,7 @@ namespace MaandelijkseLonen
             using (StreamWriter writer = new StreamWriter(bestandsNaam))
             {
                 writer.WriteLine("----------------------------------------------");
-                writer.WriteLine($"LOONBRIEF {DateTime.Now.ToString("MMMM").ToUpper()} {DateTime.Now.Year} ");
+                writer.WriteLine($"LOONBRIEF {DateTime.Now.ToString("MMMM yyyy").ToUpper()} ");
                 writer.WriteLine("----------------------------------------------");
                 writer.WriteLine($"NAAM                     :{Naam}");
                 writer.WriteLine($"RIJKSREGISTERNUMMER      :{RijksRegisterNummer}");
@@ -93,7 +90,7 @@ namespace MaandelijkseLonen
                 writer.WriteLine($"GEBOORTEDATUM            :{GeboorteDatum.ToShortDateString()}");
                 writer.WriteLine($"DATUM INDIENSTTREDING    :{DatumInDienstTreding.ToShortDateString()}");
                 writer.WriteLine($"FUNCTIE                  :{FunctieTitel}");
-                writer.WriteLine($"AANTAL GEPRESTEERDE UREN :{Uren[TypeContract.ToString()]}/38");
+                writer.WriteLine($"AANTAL GEPRESTEERDE UREN :{AantalUren}/38");
                 writer.WriteLine($"BEDRIJFSWAGEN            :{(BedrijfsWagen?"JA":"NEE")}");
                 writer.WriteLine("----------------------------------------------");
                 writer.WriteLine($"STARTLOON                :   €{PrintValue(StartLoon())}");
@@ -109,7 +106,7 @@ namespace MaandelijkseLonen
                 }
                 writer.WriteLine($"NETTOLOON                :   €{PrintValue(nettoLoon)}");
                 writer.WriteLine("----------------------------------------------");
-                writer.WriteLine("Het wordt uitbetaald op: {0}",Iban);
+                writer.WriteLine($"Loon wordt uitbetaald op: {Iban }");
                 writer.WriteLine("----------------------------------------------");
 
             }

@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
@@ -40,6 +41,8 @@
             this.label5 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.dtDatumInDienst = new System.Windows.Forms.DateTimePicker();
+            this.label11 = new System.Windows.Forms.Label();
             this.label10 = new System.Windows.Forms.Label();
             this.numBrutoLoon = new System.Windows.Forms.NumericUpDown();
             this.label9 = new System.Windows.Forms.Label();
@@ -52,10 +55,12 @@
             this.label6 = new System.Windows.Forms.Label();
             this.btnBevestigen = new System.Windows.Forms.Button();
             this.btnCancel = new System.Windows.Forms.Button();
+            this.epError = new System.Windows.Forms.ErrorProvider(this.components);
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numBrutoLoon)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numUren)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.epError)).BeginInit();
             this.SuspendLayout();
             // 
             // label1
@@ -106,11 +111,12 @@
             // 
             // cbGeslacht
             // 
+            this.cbGeslacht.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cbGeslacht.FormattingEnabled = true;
             this.cbGeslacht.Location = new System.Drawing.Point(122, 71);
             this.cbGeslacht.Name = "cbGeslacht";
             this.cbGeslacht.Size = new System.Drawing.Size(130, 21);
-            this.cbGeslacht.TabIndex = 9;
+            this.cbGeslacht.TabIndex = 3;
             // 
             // tbRekeningNummer
             // 
@@ -118,7 +124,7 @@
             this.tbRekeningNummer.Mask = "BE00 0000 0000 0000";
             this.tbRekeningNummer.Name = "tbRekeningNummer";
             this.tbRekeningNummer.Size = new System.Drawing.Size(130, 20);
-            this.tbRekeningNummer.TabIndex = 8;
+            this.tbRekeningNummer.TabIndex = 5;
             // 
             // tbRijksregisterNummer
             // 
@@ -126,7 +132,7 @@
             this.tbRijksregisterNummer.Mask = "000000-000-00";
             this.tbRijksregisterNummer.Name = "tbRijksregisterNummer";
             this.tbRijksregisterNummer.Size = new System.Drawing.Size(130, 20);
-            this.tbRijksregisterNummer.TabIndex = 7;
+            this.tbRijksregisterNummer.TabIndex = 4;
             // 
             // dtGeboorteDatum
             // 
@@ -135,7 +141,7 @@
             this.dtGeboorteDatum.MaxDate = new System.DateTime(2020, 8, 31, 0, 0, 0, 0);
             this.dtGeboorteDatum.Name = "dtGeboorteDatum";
             this.dtGeboorteDatum.Size = new System.Drawing.Size(130, 20);
-            this.dtGeboorteDatum.TabIndex = 6;
+            this.dtGeboorteDatum.TabIndex = 2;
             this.dtGeboorteDatum.Value = new System.DateTime(2020, 8, 31, 0, 0, 0, 0);
             // 
             // tbNaam
@@ -143,7 +149,7 @@
             this.tbNaam.Location = new System.Drawing.Point(122, 19);
             this.tbNaam.Name = "tbNaam";
             this.tbNaam.Size = new System.Drawing.Size(226, 20);
-            this.tbNaam.TabIndex = 5;
+            this.tbNaam.TabIndex = 1;
             // 
             // label5
             // 
@@ -165,6 +171,10 @@
             // 
             // groupBox2
             // 
+            this.groupBox2.BackColor = System.Drawing.SystemColors.Control;
+            this.groupBox2.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+            this.groupBox2.Controls.Add(this.dtDatumInDienst);
+            this.groupBox2.Controls.Add(this.label11);
             this.groupBox2.Controls.Add(this.label10);
             this.groupBox2.Controls.Add(this.numBrutoLoon);
             this.groupBox2.Controls.Add(this.label9);
@@ -177,15 +187,31 @@
             this.groupBox2.Controls.Add(this.label6);
             this.groupBox2.Location = new System.Drawing.Point(12, 175);
             this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(368, 157);
+            this.groupBox2.Size = new System.Drawing.Size(368, 179);
             this.groupBox2.TabIndex = 4;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Contract gegevens";
             // 
+            // dtDatumInDienst
+            // 
+            this.dtDatumInDienst.Location = new System.Drawing.Point(125, 46);
+            this.dtDatumInDienst.Name = "dtDatumInDienst";
+            this.dtDatumInDienst.Size = new System.Drawing.Size(121, 20);
+            this.dtDatumInDienst.TabIndex = 7;
+            // 
+            // label11
+            // 
+            this.label11.AutoSize = true;
+            this.label11.Location = new System.Drawing.Point(20, 52);
+            this.label11.Name = "label11";
+            this.label11.Size = new System.Drawing.Size(86, 13);
+            this.label11.TabIndex = 10;
+            this.label11.Text = "Datum in dienst :";
+            // 
             // label10
             // 
             this.label10.AutoSize = true;
-            this.label10.Location = new System.Drawing.Point(48, 100);
+            this.label10.Location = new System.Drawing.Point(45, 130);
             this.label10.Name = "label10";
             this.label10.Size = new System.Drawing.Size(61, 13);
             this.label10.TabIndex = 9;
@@ -193,7 +219,7 @@
             // 
             // numBrutoLoon
             // 
-            this.numBrutoLoon.Location = new System.Drawing.Point(125, 99);
+            this.numBrutoLoon.Location = new System.Drawing.Point(125, 128);
             this.numBrutoLoon.Maximum = new decimal(new int[] {
             20000,
             0,
@@ -201,12 +227,12 @@
             0});
             this.numBrutoLoon.Name = "numBrutoLoon";
             this.numBrutoLoon.Size = new System.Drawing.Size(121, 20);
-            this.numBrutoLoon.TabIndex = 8;
+            this.numBrutoLoon.TabIndex = 10;
             // 
             // label9
             // 
             this.label9.AutoSize = true;
-            this.label9.Location = new System.Drawing.Point(42, 75);
+            this.label9.Location = new System.Drawing.Point(39, 104);
             this.label9.Name = "label9";
             this.label9.Size = new System.Drawing.Size(67, 13);
             this.label9.TabIndex = 7;
@@ -214,42 +240,56 @@
             // 
             // cbBedrijfsWagen
             // 
+            this.cbBedrijfsWagen.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cbBedrijfsWagen.FormattingEnabled = true;
-            this.cbBedrijfsWagen.Location = new System.Drawing.Point(125, 125);
+            this.cbBedrijfsWagen.Location = new System.Drawing.Point(125, 152);
             this.cbBedrijfsWagen.Name = "cbBedrijfsWagen";
             this.cbBedrijfsWagen.Size = new System.Drawing.Size(121, 21);
-            this.cbBedrijfsWagen.TabIndex = 6;
+            this.cbBedrijfsWagen.TabIndex = 11;
             // 
             // numUren
             // 
-            this.numUren.Location = new System.Drawing.Point(125, 73);
+            this.numUren.Location = new System.Drawing.Point(125, 102);
+            this.numUren.Minimum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
             this.numUren.Name = "numUren";
             this.numUren.Size = new System.Drawing.Size(121, 20);
-            this.numUren.TabIndex = 5;
+            this.numUren.TabIndex = 9;
+            this.numUren.Value = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
             this.numUren.ValueChanged += new System.EventHandler(this.numUren_ValueChanged);
             // 
             // cbTypeContract
             // 
+            this.cbTypeContract.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cbTypeContract.FormattingEnabled = true;
-            this.cbTypeContract.Location = new System.Drawing.Point(125, 46);
+            this.cbTypeContract.Location = new System.Drawing.Point(125, 75);
             this.cbTypeContract.Name = "cbTypeContract";
             this.cbTypeContract.Size = new System.Drawing.Size(121, 21);
-            this.cbTypeContract.TabIndex = 4;
+            this.cbTypeContract.TabIndex = 8;
             this.cbTypeContract.SelectedIndexChanged += new System.EventHandler(this.cbTypeContract_SelectedIndexChanged);
             // 
             // cbFunctie
             // 
+            this.cbFunctie.BackColor = System.Drawing.SystemColors.Window;
+            this.cbFunctie.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cbFunctie.FormattingEnabled = true;
             this.cbFunctie.Location = new System.Drawing.Point(125, 19);
             this.cbFunctie.Name = "cbFunctie";
             this.cbFunctie.Size = new System.Drawing.Size(121, 21);
-            this.cbFunctie.TabIndex = 3;
+            this.cbFunctie.TabIndex = 6;
             this.cbFunctie.SelectedIndexChanged += new System.EventHandler(this.cbFunctie_SelectedIndexChanged);
             // 
             // label8
             // 
             this.label8.AutoSize = true;
-            this.label8.Location = new System.Drawing.Point(27, 128);
+            this.label8.Location = new System.Drawing.Point(24, 155);
             this.label8.Name = "label8";
             this.label8.Size = new System.Drawing.Size(82, 13);
             this.label8.TabIndex = 2;
@@ -258,7 +298,7 @@
             // label7
             // 
             this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(61, 22);
+            this.label7.Location = new System.Drawing.Point(58, 22);
             this.label7.Name = "label7";
             this.label7.Size = new System.Drawing.Size(48, 13);
             this.label7.TabIndex = 1;
@@ -267,7 +307,7 @@
             // label6
             // 
             this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(30, 49);
+            this.label6.Location = new System.Drawing.Point(27, 78);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(79, 13);
             this.label6.TabIndex = 0;
@@ -275,34 +315,38 @@
             // 
             // btnBevestigen
             // 
-            this.btnBevestigen.Location = new System.Drawing.Point(12, 340);
+            this.btnBevestigen.Location = new System.Drawing.Point(12, 376);
             this.btnBevestigen.Name = "btnBevestigen";
             this.btnBevestigen.Size = new System.Drawing.Size(175, 23);
-            this.btnBevestigen.TabIndex = 5;
+            this.btnBevestigen.TabIndex = 12;
             this.btnBevestigen.Text = "button1";
             this.btnBevestigen.UseVisualStyleBackColor = true;
             this.btnBevestigen.Click += new System.EventHandler(this.btnBevestigen_Click);
             // 
             // btnCancel
             // 
-            this.btnCancel.Location = new System.Drawing.Point(202, 340);
+            this.btnCancel.Location = new System.Drawing.Point(205, 376);
             this.btnCancel.Name = "btnCancel";
             this.btnCancel.Size = new System.Drawing.Size(175, 23);
-            this.btnCancel.TabIndex = 6;
+            this.btnCancel.TabIndex = 13;
             this.btnCancel.Text = "Annuleren";
             this.btnCancel.UseVisualStyleBackColor = true;
             this.btnCancel.Click += new System.EventHandler(this.btnCancel_Click);
+            // 
+            // epError
+            // 
+            this.epError.ContainerControl = this;
             // 
             // FormGebruikerGegevens
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(394, 376);
+            this.ClientSize = new System.Drawing.Size(394, 411);
             this.Controls.Add(this.btnCancel);
             this.Controls.Add(this.btnBevestigen);
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.groupBox1);
-            this.MaximumSize = new System.Drawing.Size(410, 415);
+            this.MaximumSize = new System.Drawing.Size(410, 450);
             this.MinimumSize = new System.Drawing.Size(410, 415);
             this.Name = "FormGebruikerGegevens";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
@@ -314,6 +358,7 @@
             this.groupBox2.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numBrutoLoon)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numUren)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.epError)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -344,5 +389,8 @@
         private System.Windows.Forms.NumericUpDown numBrutoLoon;
         private System.Windows.Forms.Button btnBevestigen;
         private System.Windows.Forms.Button btnCancel;
+        private System.Windows.Forms.DateTimePicker dtDatumInDienst;
+        private System.Windows.Forms.Label label11;
+        private System.Windows.Forms.ErrorProvider epError;
     }
 }
